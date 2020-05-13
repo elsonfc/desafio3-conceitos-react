@@ -4,11 +4,20 @@ import "./styles.css";
 
 function App() {
   async function handleAddRepository() {
-    // TODO
+    const response = await api.post('repositories',{
+      title: `New Repository ${Date.now()}`,
+      url: 'repository/new',
+      techs: 'Teconology'
+    });
+    const repository = response.data;
+    setRepositories([...repositories, repository]);
   }
 
   async function handleRemoveRepository(id) {
-    // TODO
+    const response = await api.delete(`repositories/${id}`);
+    if(response.status===204){
+      setRepositories(repositories.filter(repository=>repository.id!==id));
+    }
   }
 
   return (
